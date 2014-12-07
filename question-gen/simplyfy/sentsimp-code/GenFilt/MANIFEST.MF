@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.4
+Created-By: 1.8.0-b132 (Oracle Corporation)
+Built-By: lizuyao
+Main-Class: edu.cmu.cs.lti.relationFilter.Filter
+Implementation-Version: 0.1-b0
+Built-Date: 2014-11-28 23:52:51
+

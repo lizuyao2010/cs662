@@ -1,0 +1,76 @@
+/** Add css rules here for your application. */
+
+/* Formatting specific to the Sentence Simplification application */ 
+body { 
+	padding: 10px; 
+	font-size: 14px;
+} 
+
+/* short sentence list header row */ 
+.watchListHeader { 
+	background-color: #2062B8; 
+	color: white; 
+	font-style: italic; 
+}
+
+/* short sentences flex table */ 
+.watchList { 
+	border: 1px solid silver; 
+	padding: 2px; 
+	margin-top:16px;
+	margin-bottom:6px; 
+}
+
+/* short sentence list Remove column */ 
+.watchListRemoveColumn { 
+	text-align: center; 
+}
+
+/* Add short sentence panel */ 
+.addPanel { 
+	margin: 10px 0px; 
+}
+
+/* Add long sentence label */ 
+.longsentLabelStyle { 
+	font-size: 14pt;
+	color: red;  
+}
+.longsentLabelStyle1 { 
+	font-size: 12pt;
+}
+
+/* message style*/
+
+.info, .success, .warning, .error, .validation { 
+	border: 1px solid; 
+	margin: 10px 0px;
+	font-size: 12pt; 
+	padding:15px 10px 15px 50px; 
+	background-repeat: no-repeat; 
+	background-position: 10px center; 
+} 
+
+.info { 
+	color: #00529B; 
+	background-color: #BDE5F8; 
+	background-image: url('image/info.png'); 
+} 
+
+.success { 
+	color: #4F8A10; 
+	background-color: #DFF2BF; 
+	background-image:url('image/success.png'); 
+} 
+
+.warning { 
+	color: #9F6000; 
+	background-color: #FEEFB3; 
+	background-image: url('image/warning.png'); 
+} 
+
+.error { 
+	color: #D8000C; 
+	background-color: #FFBABA; 
+	background-image: url('image/error.png'); 
+} 

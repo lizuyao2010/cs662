@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="SentenceSimplificationWebInterface.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Sentence Simplification Web Interface</title>
+    
+     <!-- Get user geo-location information        -->
+    <script language="Javascript" src="http://gd.geobytes.com/gd?after=-1&variables=GeobytesCountry,GeobytesCity,GeobytesRegion,GeobytesIpAddress"></script>
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="sentencesimplificationwebinterface/sentencesimplificationwebinterface.nocache.js"></script>
+    
+    
+     
+    
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+    
+    <center><h1>Sentence Simplification</h1></center>         
+    <hr>    
+    <div id="sentsimp"></div>     
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    <hr>
+         <p><u><big>Instructions:</big></u></p>    
+         <p><big> Given a long English sentence, your task is try to use words in the original one to construct shorter sentences in which <b>the meaning of all shorter ones is the same as the meaning of the original long sentence</b>. </big></p>
+         <p><u><big>Example:</big></u></p>
+         <p><big>An original long English sentence:</big><br/> 
+         <i><big>John lives in Seattle, works for Amazon, and is a fund raiser of a charity organization</big></i> <br/>
+         <big>will be rewritten into 3 shorter sentences  </big></p>
+         <p><i><big>John lives in Seattle . </big></i> <br/>
+         <i><big>John works for Amazon . </big></i> <br/>
+         <i><big>John is a fund raiser of a charity organization . </big></i></p>
+         <p><u><big>Notes:</big></u></p>
+         <p><big>+ Try to minimize the number of new words in shorter sentences. Always try to use words from the original sentence to construct a new shorter ones.</big><br/>
+         <big>+ You can ignore some words from the original sentence. In the above example, you ignore the word "<i>and</i>".</big><br/>
+         <big>+ The number of not used word should also be minimal, for instance instead of writing "<i>He is a fund raiser</i>" you should write as the 3rd sentence in the above example.</big></p>
+
+    <script language="Javascript">
+    <!--
+        function getUserInfo() {
+            var userDisplayLanguage = navigator.language ? navigator.language : navigator.userDisplayLanguage;
+            var browserInfo = navigator.userAgent;
+            var country = sGeobytesCountry;
+            var city = sGeobytesCity;
+            var region = sGeobytesRegion;
+
+            document.write(userDisplayLanguage+ " " + browserInfo + " " + country + " " + city + " " + region + " ");
+        }
+        getUserInfo();
+      // -->
+      </script>
+
+  </body>
+</html>

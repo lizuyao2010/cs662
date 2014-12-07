@@ -1,0 +1,11 @@
+PPAttachment filter created
+Single Pronoun filter created
+SentenceLikeBoundary filter created
+ObjectInTheSameVP filter created
+Dependency Distance filter created, maxDist=5
+Processed: 100 sentences
+Processed: 200 sentences
+Processed: 300 sentences
+Processed: 400 sentences
+Total: 102037
+Positive: 13211

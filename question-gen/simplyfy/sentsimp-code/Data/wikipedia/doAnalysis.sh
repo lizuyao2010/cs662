@@ -1,0 +1,1 @@
+/SMT/Workplace/Qin/SentSimp/cmd

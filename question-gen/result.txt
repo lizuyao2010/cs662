@@ -1,3 +1,4 @@
+provided by simon
 where question acc: 0.3125
 what question acc: 0.281081081081
 who question acc: 0.140939597315
@@ -6,3 +7,22 @@ where answr acc: 0.155555555556
 what answr acc: 0.0776255707763
 who answr acc: 0.111111111111
 when answr acc: 0.2
+
+provided by question challenge 2010
+where question acc: 0.305555555556
+what question acc: 0.260330578512
+who question acc: 0.246006389776
+when question acc: 0.380434782609
+
+newInput.txt
+where question acc: 0.319444444444
+what question acc: 0.286411716843
+who question acc: 0.157509157509
+when question acc: 0.3125
+
+newInput-break.txt
+what question acc: 0.362938596491
+who question acc: 0.203629032258
+when question acc: 0.25
+which question acc: 0.333333333333
+where question acc: 0.315789473684

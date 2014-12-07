@@ -1,0 +1,33 @@
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\ShowDemo.exe
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\ShowDemo.pdb
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\NLPLib.dll
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\NLPLib.pdb
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.frmTreeView.resources
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.Properties.Resources.resources
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.exe
+D:\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.pdb
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.exe
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.pdb
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\ShowDemo.exe
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\ShowDemo.pdb
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\NLPLib.dll
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\NLPLib.pdb
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.frmTreeView.resources
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.Properties.Resources.resources
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\ShowDemo.exe
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\ShowDemo.pdb
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\NLPLib.dll
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\bin\Debug\NLPLib.pdb
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.frmTreeView.resources
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.Properties.Resources.resources
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.exe
+C:\Users\qing\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowDemo\obj\x86\Debug\ShowDemo.pdb
