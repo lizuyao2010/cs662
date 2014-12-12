@@ -20,6 +20,98 @@ def endposition(i,sent):
             if tag=="AM-TMP" or tag=="AM-LOC" or tag=="AM-ADV":
                 return j
     return j+1
+
+def generate_when(inputsentence,sent):
+    when=[]
+    when_question=[]
+    when_answer=[]
+    flag=True
+    for (i,row) in enumerate(sent):
+        if row[11]=="ROOT":
+            if row[3]=="be":
+                when_question.insert(0,row[1])
+                if sent[i+1][5]=="VBG":
+                    when_question.append(sent[i+1][1])
+                    i+=1
+            else:         
+                if row[5]=="VBZ":
+                    when_question.insert(0,"does")
+                elif row[5]=="VBD":
+                    when_question.insert(0,"did")
+                elif row[5]=="VBG":
+                    if when_question:
+                        top=when_question.pop()
+                        when_question.insert(0,top)
+                        when_question.append(row[1])
+                        flag=True
+                        continue
+                else:
+                    when_question.insert(0,"do")
+                when_question.append(row[2])
+        else:
+            for tag in row[14:]:
+                if tag=="AM-TMP":
+                    flag=False
+                    when_question.insert(0,"when")
+                    j=endposition(i+1,sent)
+                    when_answer=[word[1] for word in sent[i:j]]
+                    print when_answer
+                    when.append({'Q':when_question,'A':when_answer})
+                    break
+            if flag:
+                when_question.append(row[1])
+            else:
+                when_question="when was this event".split()
+                when.append({'Q':when_question,'A':when_answer})
+                break
+    return when
+
+def generate_where(inputsentence,sent):
+    where=[]
+    where_question=[]
+    where_answer=[]
+    flag=True
+    for (i,row) in enumerate(sent):
+        if row[11]=="ROOT":
+            if row[3]=="be":
+                where_question.insert(0,row[1])
+                if sent[i+1][5]=="VBG":
+                    where_question.append(sent[i+1][1])
+                    i+=1
+            else:         
+                if row[5]=="VBZ":
+                    where_question.insert(0,"does")
+                elif row[5]=="VBD":
+                    where_question.insert(0,"did")
+                elif row[5]=="VBG":
+                    if where_question:
+                        top=where_question.pop()
+                        where_question.insert(0,top)
+                        where_question.append(row[1])
+                        flag=True
+                        continue
+                else:
+                    where_question.insert(0,"do")
+                where_question.append(row[2])
+        else:
+            for tag in row[14:]:
+                if tag=="AM-LOC":
+                    flag=False
+                    where_question.insert(0,"where")
+                    j=endposition(i+1,sent)
+                    where_answer=[word[1] for word in sent[i:j]]
+                    where.append({'Q':where_question,'A':where_answer})
+                    break
+            if flag:
+                where_question.append(row[1])
+            else:
+                where_question="where was this event".split()
+                where.append({'Q':where_question,'A':where_answer})
+                break
+    return where
+
+
+
 def generate_which(inputsentence,sent):
     which=[]
     typeoftext={}
@@ -57,7 +149,7 @@ def generate_which(inputsentence,sent):
                     which_question.append(row[2])
             elif row[1] == key:
                 which_question.insert(0,typeoftext[row[1]])
-                which_question.insert(0,"which")
+                which_question.insert(0,"what")
                 which_answer=[row[1]]
                 which.append({'Q':which_question,'A':which_answer})
                 break
@@ -66,6 +158,7 @@ def generate_which(inputsentence,sent):
     return which
 
 def generate_what(sent):
+    what=[]
     what_question=[]
     what_answer=[]
     for (i,row) in enumerate(sent):
@@ -95,7 +188,8 @@ def generate_what(sent):
             break
         else:
             what_question.append(row[1])
-    return what_question,what_answer    
+    what=[{'Q':what_question,'A':what_answer}]
+    return what   
 
 def inputsentence_analysis(inputsentence):
     post_data = "sentence="+inputsentence
@@ -125,99 +219,11 @@ def inputsentence_analysis(inputsentence):
         else:    
             who_question.append(row[1])
 
-    what_question,what_answer=generate_what(sent)
-    '''
-    what_question=[]
-    what_answer=[]
-    flag=False
-    for (i,row) in enumerate(sent):
-        if row[12]=="Y" and flag==False:
-            if row[5]=="VBZ":
-                what_question.insert(0,"does")
-            elif row[5]=="VBD":
-                what_question.insert(0,"did")
-            elif row[5]=="VBG":
-                if what_question:
-                    top=what_question.pop()
-                    what_question.insert(0,top)
-                    what_question.append(row[1])
-                    flag=True
-                    continue
-            else:
-                what_question.insert(0,"do")
-            what_question.append(row[2])
-            flag=True
-        elif row[14]=="A1":
-            what_question.insert(0,"what")
-            #deal with a
-            if sent[i-1][9]==row[0]:
-                a=what_question.pop()
-                what_answer.append(a)
-            j=endposition(i+1,sent)
-            what_answer=what_answer+[word[1] for word in sent[i:j]]
-            break
-        else:
-            what_question.append(row[1])
-    '''
-    '''
-    which=[]
-    typeoftext={}
-    alchemyapi = AlchemyAPI()
-    response = alchemyapi.entities('text', inputsentence)
-    if response['status'] == 'OK':
-        for entity in response['entities']:
-            typeoftext[entity['text'].encode('utf-8')]=entity['type']
-    else:
-        print('Error in entity extraction call: ', response['statusInfo'])
-    for key in typeoftext:
-        which_question=[]
-        which_answer=[]
-        flag=False
-        for (i,row) in enumerate(sent):
-            if row[12]=="Y" and flag==False:
-                if row[5]=="VBZ":
-                    which_question.insert(0,"does")
-                elif row[5]=="VBD":
-                    which_question.insert(0,"did")
-                elif row[5]=="VBG":
-                    if which_question:
-                        top=which_question.pop()
-                        which_question.insert(0,top)
-                        which_question.append(row[1])
-                        flag=True
-                        continue
-                else:
-                    which_question.insert(0,"do")
-                which_question.append(row[2])
-                flag=True
-            elif row[1] == key:
-                which_question.insert(0,typeoftext[row[1]])
-                which_question.insert(0,"which")
-                which_answer=[row[1]]
-                which.append({'Q':which_question,'A':which_answer})
-                break
-            else:
-                which_question.append(row[1])        
-    '''
+    what=generate_what(sent)
     which=generate_which(inputsentence,sent)
-    when_question=[]
-    when_answer=[]
-    for (i,row) in enumerate(sent):
-        for tag in row[14:]:
-            if tag=="AM-TMP" or tag=="AM-MNR":
-                when_question="when was this event".split()
-                j=endposition(i+1,sent)
-                when_answer=[word[1] for word in sent[i:j]]
-                break
-    where_question=[]
-    where_answer=[]
-    for (i,row) in enumerate(sent):
-        for tag in row[14:]:
-            if tag=="AM-LOC":
-                where_question="where was this event".split()
-                j=endposition(i+1,sent)
-                where_answer=[word[1] for word in sent[i:j]]
-                break
+    what=what+which
+    when=generate_when(inputsentence,sent)
+    where=generate_where(inputsentence,sent)
 
     whom_question=[]
     whom_answer=[]
@@ -240,7 +246,7 @@ def inputsentence_analysis(inputsentence):
                 whom_question.insert(0,"do")
             whom_question.append(row[2])
             flag=True
-        elif row[14]=="AM-ADV":
+        elif row[14]=="AM-ADV" or row[14]=="AM-MNR":
             whom_question.insert(0,"whom")
             whom_question.append(row[1])
             j=endposition(i+1,sent)
@@ -254,28 +260,28 @@ def inputsentence_analysis(inputsentence):
     print "Questions and anwers:"
     print "Who Q:",' '.join(who_question)
     print "who A:",' '.join(who_answer)
-    print "what Q:",' '.join(what_question)
-    print "what A:",' '.join(what_answer)
-    for item in which:
-        which_question=item['Q']
-        which_answer=item['A']
-        print "which Q:",' '.join(which_question)
-        print "which A:",' '.join(which_answer)
-    print "when Q:",' '.join(when_question)
-    print "when A:",' '.join(when_answer)
-    print "where Q:",' '.join(where_question)
-    print "where A:",' '.join(where_answer)
+    printQuestion(what,'what')
+    #printQuestion(which,'which')
+    printQuestion(when,'when')
+    printQuestion(where,'where')
     print "whom Q:",' '.join(whom_question)
     print "whom A:",' '.join(whom_answer)
     
     result={}
     result['who']=[{'Q':who_question,'A':who_answer}]
-    result['what']=[{'Q':what_question,'A':what_answer}]
-    result['when']=[{'Q':when_question,'A':when_answer}]
-    result['where']=[{'Q':where_question,'A':where_answer}]
+    result['what']=what
+    result['when']=when
+    result['where']=where
     result['whom']=[{'Q':whom_question,'A':whom_answer}]
-    result['which']=which
+    #result['which']=which
     return result
+
+def printQuestion(wh,Qtype):
+    for item in wh:
+        wh_q=item['Q']
+        wh_a=item['A']
+        print "%s Q:" %(Qtype), ' '.join(wh_q)
+        print "%s A:" %(Qtype), ' '.join(wh_a)
 
 def compare_each(my_Q,Q,Qtype): 
     '''   
@@ -369,10 +375,10 @@ def demo():
         inputsentence_analysis(line)
 
 if __name__=="__main__":
-    #demo()
+    demo()
     #evaluate()
     #evaluate2()
-    evaluate3()
+    #evaluate3()
     for key in stat_question_acc:
         if stat_question_acc[key][0]>0:
             print key, 'question acc:', float(stat_question_acc[key][1])/stat_question_acc[key][0]
