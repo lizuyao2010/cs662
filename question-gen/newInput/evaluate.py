@@ -8,17 +8,29 @@ stat_answer_acc={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0
 stat_answer_acc_BLEU={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
 weights = [0.25, 0.25, 0.25, 0.25]
 
-def compare_each_answer(my_Q,Q,Qtype):   
-    number_correct = len(my_Q) * BLEU.modified_precision(my_Q,[Q],n=1)
-    number_correct_BLEU=BLEU.compute(my_Q,[Q],weights)
+def compare_each_answer(my_Q,Q,Qtype):
+    acc=BLEU.modified_precision(my_Q,[Q],n=1)
+    BLEU_score=BLEU.compute(my_Q,[Q],weights)
+    print 'my_A:', ' '.join(my_Q)
+    print 'gold_A:',' '.join(Q)
+    print 'Unigram acc:',acc
+    print 'BLEU:',BLEU_score
+    number_correct = len(my_Q) * acc
+    number_correct_BLEU=BLEU_score
     stat_answer_acc[Qtype][0]+=len(my_Q)
     stat_answer_acc_BLEU[Qtype][0]+=1
     stat_answer_acc[Qtype][1]+=number_correct
     stat_answer_acc_BLEU[Qtype][1]+=number_correct_BLEU   
 
 def compare_each_question(my_Q,Q,Qtype):   
-    number_correct = len(my_Q) * BLEU.modified_precision(my_Q,[Q],n=1)
-    number_correct_BLEU=BLEU.compute(my_Q,[Q],weights)
+    acc=BLEU.modified_precision(my_Q,[Q],n=1)
+    BLEU_score=BLEU.compute(my_Q,[Q],weights)
+    print 'my_Q:', ' '.join(my_Q)
+    print 'gold_Q:',' '.join(Q)
+    print 'Unigram acc:',acc
+    print 'BLEU:',BLEU_score
+    number_correct = len(my_Q) * acc
+    number_correct_BLEU=BLEU_score
     stat_question_acc[Qtype][0]+=len(my_Q)
     stat_question_acc_BLEU[Qtype][0]+=1
     stat_question_acc[Qtype][1]+=number_correct
