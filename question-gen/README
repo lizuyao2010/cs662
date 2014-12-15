@@ -1,11 +1,18 @@
 This is the folder of our quesiton generation project
 run the command:
 cd practNLPTools-1.0
-Then run the command:
-./demo.sh
-It will test the input file Broken-origInputOnlySent.txt in the practNLPTools-1.0/data folder and output the question generation results file Broken-origInputOnlySent.txt.out in the newInput folder.
-To evaluate the result file Broken-origInputOnlySent.txt.out
-You need to run commands:
-cd ../newInput
-./evaluate.sh
-It will give you the accuracy of our question generation system.
+To check the system performance just run the command:
+    ./demo.sh
+    It will test the input file Broken-origInputOnlySent.txt in the practNLPTools-1.0/data folder and output the question generation results file Broken-origInputOnlySent.txt.out in the newInput folder.
+    To evaluate the result file Broken-origInputOnlySent.txt.out
+    You need to run commands:
+    cd ../newInput
+    ./evaluate.sh
+    It will give you the accuracy of our question generation system.
+You can also play with the system by run the command:
+    echo 'your input sentence' | ./demo.py
+    it will print out four lines for each quesiton type
+    the first line is your input sentence
+    the second line is the question generated
+    the third line is the answer generated
+    the fourth line is question type
