@@ -1,5 +1,0 @@
-D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowGTKDemo\bin\Debug\ShowGTKDemo.exe
-D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowGTKDemo\bin\Debug\ShowGTKDemo.pdb
-D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowGTKDemo\obj\Debug\ResolveAssemblyReference.cache
-D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowGTKDemo\obj\Debug\ShowGTKDemo.exe
-D:\Documents\My Dropbox\Research\MicrosoftIntern\LearnCSharp\ReadInputAndOutputFeature\ShowGTKDemo\obj\Debug\ShowGTKDemo.pdb

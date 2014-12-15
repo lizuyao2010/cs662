@@ -9,6 +9,15 @@ wordnet_lemmatizer = WordNetLemmatizer()
 alchemyapi = AlchemyAPI()
 template={}
 full_template=['AM-MOD','A0','AM-ADV', 'AM-NEG','V','C-V','AM-DIR','A1','A2','A3','A4','AM-PNC','AM-MNR','AM-LOC','AM-TMP','C-A1']
+for item in full_template:
+    copy_template=full_template[:]
+    copy_template.remove(item)
+    if 'AM-LOC' in copy_template:
+        copy_template.remove('AM-LOC')
+    if 'AM-TMP' in copy_template:
+        copy_template.remove('AM-TMP')
+    template[item]=copy_template
+
 '''
 template['A0']=['AM-MOD','V','A1','A2','AM-MNR','AM-LOC','AM-TMP']
 template['A1']=['AM-MOD','A0','V','A2','AM-MNR','AM-LOC','AM-TMP']
@@ -17,13 +26,10 @@ template['AM-MNR']=['AM-MOD','A0','V','A1','A2','AM-LOC','AM-TMP']
 template['AM-TMP']=['AM-MOD','A0','V','A1','A2','AM-MNR','AM-LOC']
 template['AM-LOC']=['AM-MOD','A0','V','A1','A2','AM-MNR','AM-TMP']
 '''
-for item in full_template:
-    copy_template=full_template[:]
-    copy_template.remove(item)
-    template[item]=copy_template
+
 
 role2Qtype={}
-role2Qtype['A0']=['who']
+role2Qtype['A0']=['who','what']
 role2Qtype['A1']=['what']
 role2Qtype['A2']=['whom']
 role2Qtype['A3']=['how long']
@@ -38,23 +44,25 @@ role2Qtype['AM-CAU']=['why']
 role2Qtype['C-A1']=['how']
 pos_d={}
 
+log=open('run.log','w')
+
 def breakverb(item,srl,question):
     if pos_d[srl[item]]!='VBG' and pos_d[srl[item]]!='VBN' and 'AM-MOD' not in srl:
         question.append(wordnet_lemmatizer.lemmatize(srl[item],'v'))
         if pos_d[srl[item]]=='VBD':
-            question.insert(1,'did')
+            question.insert(0,'did')
         elif pos_d[srl[item]]=='VBZ':
-            question.insert(1,'does')
+            question.insert(0,'does')
         else:
-             question.insert(1,'do')
+             question.insert(0,'do')
     else:
         if 'AM-MOD' not in srl:
-            question.append('was')
+            question.insert(0,'was')
         question.append(srl[item])        
 
-def generate_question(srl,questions,role,Qtype):
-    question=[Qtype]
-    answer=srl[role]
+def generate_question(srl,questions,role,Qtype,question,answer):
+    #answer=srl[role]
+    #question=[]
     for item in template[role]:
         if item in srl:
             if role=='A0':
@@ -69,7 +77,9 @@ def generate_question(srl,questions,role,Qtype):
                         breakverb(item,srl,question)
                 else:
                     question.append(srl[item])
+    question.insert(0,Qtype)
     questions[Qtype].append((' '.join(question),answer))
+    
 
 def get_sent(srl):
     s=[]
@@ -86,27 +96,41 @@ def get_entities(inputsentence):
         for entity in response['entities']:
             typeoftext[entity['text'].encode('utf-8')]=entity['type']
     else:
-        print('Error in entity extraction call: ', response['statusInfo'])
+        print >> log , ('Error in entity extraction call: ', response['statusInfo'])
     return typeoftext
-
+'''
 def generate_which(srl,inputsentence,questions):
     typeoftext=get_entities(inputsentence)
+    print typeoftext
+    print srl
     annotations=annotator.getAnnotations(inputsentence)
     pos=annotations['pos']
     for key in typeoftext:
         question=[]
         answer=''
+        questionword=''
         for word in pos:
             if word[0]==key:
-                question.insert(0,'what '+typeoftext[word[0]])
+                questionword='what '+typeoftext[word[0]]
                 answer=word[0]
             else:
                 if word[0]==srl['V']:
                     breakverb('V',srl,question)
                 else:
                     question.append(word[0])
-        questions['what'].append((' '.join(question),answer))
-
+        question.insert(0,questionword)
+        if answer and question:
+            questions['what'].append((' '.join(question),answer))
+'''
+def generate_which(srl,inputsentence,questions):
+    typeoftext=get_entities(inputsentence)
+    for key in typeoftext:
+        question=[]
+        answer=key
+        questionword=''
+        for role in srl:
+            if key in srl[role]:
+                generate_question(srl,questions,role,'what '+typeoftext[key],question,answer)
 
 def generate(srl,questions):
     srl2sent=get_sent(srl)
@@ -116,14 +140,20 @@ def generate(srl,questions):
          or role=='R-A0' or role=='R-A1' or role=='R-A2' or role=='C-V' or role=='AM-NEG':
             continue
         for Qtype in role2Qtype[role]:
-            generate_question(srl,questions,role,Qtype) 
+            if Qtype=='where':
+                questions[Qtype].append(('where was the location',srl[role]))
+            if Qtype=='when':
+                questions[Qtype].append(('when was the event',srl[role]))
+            question=[]
+            answer=srl[role]
+            generate_question(srl,questions,role,Qtype,question,answer) 
 
 def printQ(questions,line,i):
     for Qtype in questions:
         for question_answer in questions[Qtype]:
-            print i,line
-            print question_answer[0]
-            print question_answer[1]
+            print line[0]
+            print question_answer[0].lower()
+            print question_answer[1].lower()
             print Qtype
             print
 
@@ -131,17 +161,21 @@ if __name__=='__main__':
     for (i,line) in enumerate(sys.stdin,1):
         if line[0]=="#":
             continue
-        line=line.strip().rstrip('.').lower()
-        annotations=annotator.getAnnotations(line)
+        line=line.strip().rstrip('.').split('\t')
+        if len(line)>1:
+            annotations=annotator.getAnnotations(line[1])
+        else:
+            annotations=annotator.getAnnotations(line[0])
         srl=annotations['srl']
         pos=annotations['pos']
         ner=annotations['ner']
         if not srl:
-            print 'semantic role labeling failed'
+            #print 'semantic role labeling failed'
             continue
-        print srl
+        #print srl
         pos_d=dict(pos)
         questions=defaultdict(list)
         for item in srl:
             generate(item,questions)
         printQ(questions,line,i)
+    log.close()

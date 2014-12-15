@@ -9,7 +9,7 @@ corpus={}
 last_sent=''
 i=1
 for line in f:
-    line=line.strip()
+    line=line.strip().rstrip('.').strip()
     if line:
         line_number+=1
         if line_number==3:

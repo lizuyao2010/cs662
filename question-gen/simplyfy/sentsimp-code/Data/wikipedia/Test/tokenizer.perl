@@ -1,1 +1,0 @@
-/people/qing0/compile/moses/moses-10-Oct-24/scripts/tokenizer/tokenizer.perl

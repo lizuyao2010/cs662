@@ -1,1 +1,0 @@
-../Data/wikipedia/wiki.SimpleEnglish.txt

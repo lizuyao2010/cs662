@@ -19,6 +19,7 @@ for line in f:
             Q=line.lower().split()
     else:
         if line_number!=0:
+            #print InputSentence
             assert line_number==4
             if not corpus.has_key(InputSentence): 
                 corpus[InputSentence]={}
