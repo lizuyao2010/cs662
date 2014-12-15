@@ -11,7 +11,7 @@ from alchemyapi import AlchemyAPI
 stat_question_acc={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0]}
 stat_answer_acc={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0]}
 weights = [0.25, 0.25, 0.25, 0.25]
-
+log=open('run.log','w')
 def endposition(i,sent):
     j=i
     for j in range(i,len(sent)):
@@ -55,7 +55,6 @@ def generate_when(inputsentence,sent):
                     when_question.insert(0,"when")
                     j=endposition(i+1,sent)
                     when_answer=[word[1] for word in sent[i:j]]
-                    print when_answer
                     when.append({'Q':when_question,'A':when_answer})
                     break
             if flag:
@@ -121,7 +120,7 @@ def generate_which(inputsentence,sent):
         for entity in response['entities']:
             typeoftext[entity['text'].encode('utf-8')]=entity['type']
     else:
-        print('Error in entity extraction call: ', response['statusInfo'])
+        print >> log ,('Error in entity extraction call: ', response['statusInfo'])
     for key in typeoftext:
         which_question=[]
         which_answer=[]
@@ -202,7 +201,7 @@ def inputsentence_analysis(inputsentence):
         table=row.split('\t')
         sent.append(table)
     if len(sent[0])<15:
-        print 'semantic parsing failed'
+        print >> log,'semantic parsing failed'
         return {}
     who_question=[]
     who_answer=[]
@@ -254,26 +253,24 @@ def inputsentence_analysis(inputsentence):
             break
         else:
             whom_question.append(row[1])
-    
+    '''
     print "Input sentence:"
     print inputsentence
     print "Questions and anwers:"
-    print "Who Q:",' '.join(who_question)
+    print "who Q:",' '.join(who_question)
     print "who A:",' '.join(who_answer)
     printQuestion(what,'what')
-    #printQuestion(which,'which')
     printQuestion(when,'when')
     printQuestion(where,'where')
     print "whom Q:",' '.join(whom_question)
     print "whom A:",' '.join(whom_answer)
-    
+    '''
     result={}
     result['who']=[{'Q':who_question,'A':who_answer}]
     result['what']=what
     result['when']=when
     result['where']=where
     result['whom']=[{'Q':whom_question,'A':whom_answer}]
-    #result['which']=which
     return result
 
 def printQuestion(wh,Qtype):
@@ -367,12 +364,26 @@ def evaluate3():
                 if my_answer:
                     compare(my_answer,sent)
             line_number=0
+def printresult(questions,line):
+    for Qtype in questions:
+        for question_answer in questions[Qtype]:
+            if question_answer['Q'] and question_answer['A']:
+                print line[0]
+                print ' '.join(question_answer['Q']).lower().rstrip('.')
+                print ' '.join(question_answer['A']).lower()
+                print Qtype
+                print
 
 def demo():
     for line in sys.stdin:
         if line[0]=="#":
             continue
-        inputsentence_analysis(line)
+        line=line.strip().split('\t')
+        if len(line)>1: 
+            result=inputsentence_analysis(line[1])
+        else:
+            result=inputsentence_analysis(line[0])
+        printresult(result,line)
 
 if __name__=="__main__":
     demo()
@@ -387,6 +398,7 @@ if __name__=="__main__":
         if stat_answer_acc[key][0]>0:
             print key, 'answr acc:', float(stat_answer_acc[key][1])/stat_answer_acc[key][0]  
 
+    log.close()
 
 
 

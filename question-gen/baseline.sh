@@ -1,0 +1,7 @@
+INPUT_DIR="./"
+INPUT_FILE="Broken-origInputOnlySent.txt"
+INPUT_PATH=$INPUT_DIR$INPUT_FILE
+OUTPUT_DIR="newInput/"
+OUTPUT_FILE="$INPUT_FILE.dep"
+OUTPUT_PATH=$OUTPUT_DIR$OUTPUT_FILE
+cat $INPUT_PATH | python ./baseline.py > $OUTPUT_PATH
