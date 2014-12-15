@@ -16,6 +16,8 @@ for item in full_template:
         copy_template.remove('AM-LOC')
     if 'AM-TMP' in copy_template:
         copy_template.remove('AM-TMP')
+    if 'AM-MNR' in copy_template:
+        copy_template.remove('AM-MNR')
     template[item]=copy_template
 
 '''
@@ -98,30 +100,7 @@ def get_entities(inputsentence):
     else:
         print >> log , ('Error in entity extraction call: ', response['statusInfo'])
     return typeoftext
-'''
-def generate_which(srl,inputsentence,questions):
-    typeoftext=get_entities(inputsentence)
-    print typeoftext
-    print srl
-    annotations=annotator.getAnnotations(inputsentence)
-    pos=annotations['pos']
-    for key in typeoftext:
-        question=[]
-        answer=''
-        questionword=''
-        for word in pos:
-            if word[0]==key:
-                questionword='what '+typeoftext[word[0]]
-                answer=word[0]
-            else:
-                if word[0]==srl['V']:
-                    breakverb('V',srl,question)
-                else:
-                    question.append(word[0])
-        question.insert(0,questionword)
-        if answer and question:
-            questions['what'].append((' '.join(question),answer))
-'''
+
 def generate_which(srl,inputsentence,questions):
     typeoftext=get_entities(inputsentence)
     for key in typeoftext:
