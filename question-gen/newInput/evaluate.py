@@ -5,15 +5,24 @@ import json
 stat_question_acc={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
 stat_question_acc_BLEU={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
 stat_answer_acc={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
+stat_answer_acc_BLEU={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
 weights = [0.25, 0.25, 0.25, 0.25]
 
-def compare_each(my_Q,Q,Qtype):   
+def compare_each_answer(my_Q,Q,Qtype):   
+    number_correct = len(my_Q) * BLEU.modified_precision(my_Q,[Q],n=1)
+    number_correct_BLEU=BLEU.compute(my_Q,[Q],weights)
+    stat_answer_acc[Qtype][0]+=len(my_Q)
+    stat_answer_acc_BLEU[Qtype][0]+=1
+    stat_answer_acc[Qtype][1]+=number_correct
+    stat_answer_acc_BLEU[Qtype][1]+=number_correct_BLEU   
+
+def compare_each_question(my_Q,Q,Qtype):   
     number_correct = len(my_Q) * BLEU.modified_precision(my_Q,[Q],n=1)
     number_correct_BLEU=BLEU.compute(my_Q,[Q],weights)
     stat_question_acc[Qtype][0]+=len(my_Q)
     stat_question_acc_BLEU[Qtype][0]+=1
     stat_question_acc[Qtype][1]+=number_correct
-    stat_question_acc_BLEU[Qtype][1]+=number_correct_BLEU   
+    stat_question_acc_BLEU[Qtype][1]+=number_correct_BLEU  
 
 def compare(my_answer,sent):
     Qtype=sent['Qtype'].lower()
@@ -21,11 +30,11 @@ def compare(my_answer,sent):
         print Qtype,'not in my set'
         return
     Q=sent['Q'].lower().split()
-    #A=sent['A'].lower().split()
+    A=sent['A'].lower().split()
     if my_answer.has_key(Qtype):
         for item in my_answer[Qtype]:
-            #print item
-            compare_each(item['Q'],Q,Qtype)
+            compare_each_answer(item['A'],A,Qtype)
+            compare_each_question(item['Q'],Q,Qtype)
 
 f1=sys.argv[1]
 with open(f1, 'rb') as fp:
@@ -62,20 +71,21 @@ for line in f:
             last_sent=sent['InputSentence']
             line_number=0
 print 'total:',i
-
-
+print '--------'
 for key in stat_question_acc_BLEU:
     if stat_question_acc_BLEU[key][0]>0:
         print key, 'question acc(BLEU):', float(stat_question_acc_BLEU[key][1])/stat_question_acc_BLEU[key][0]
 
-print
+print '--------'
 for key in stat_question_acc:
     if stat_question_acc[key][0]>0:
         print key, 'question acc(unigram):', float(stat_question_acc[key][1])/stat_question_acc[key][0]
-
+print '--------'
+for key in stat_answer_acc_BLEU:
+    if stat_answer_acc_BLEU[key][0]>0:
+        print key, 'anwser acc(BLEU):', float(stat_answer_acc_BLEU[key][1])/stat_answer_acc_BLEU[key][0]
+print '--------'
 for key in stat_answer_acc:
     if stat_answer_acc[key][0]>0:
-        print key, 'answr acc:', float(stat_answer_acc[key][1])/stat_answer_acc[key][0]
-
-#print stat_question_acc
-
+        print key, 'anwser acc(unigram):', float(stat_answer_acc[key][1])/stat_answer_acc[key][0]
+print '--------'
