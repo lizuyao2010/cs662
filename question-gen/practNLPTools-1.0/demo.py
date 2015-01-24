@@ -31,14 +31,14 @@ template['AM-LOC']=['AM-MOD','A0','V','A1','A2','AM-MNR','AM-TMP']
 
 
 role2Qtype={}
-role2Qtype['A0']=['who','what']
+role2Qtype['A0']=['what is the name','what']
 role2Qtype['A1']=['what']
 role2Qtype['A2']=['whom']
 role2Qtype['A3']=['how long']
 role2Qtype['A4']=['where']
 role2Qtype['AM-MNR']=['how']
 role2Qtype['AM-LOC']=['where']
-role2Qtype['AM-TMP']=['when']
+role2Qtype['AM-TMP']=['what month and year']
 role2Qtype['AM-PNC']=['why']
 role2Qtype['AM-DIR']=['where to/from']
 role2Qtype['AM-PRP']=['why']
@@ -121,11 +121,16 @@ def generate(srl,questions):
         for Qtype in role2Qtype[role]:
             if Qtype=='where':
                 questions[Qtype].append(('where was the location',srl[role]))
-            if Qtype=='when':
-                questions[Qtype].append(('when was the event',srl[role]))
+            if Qtype=='what month and year':
+                questions[Qtype].append(('what month and year was the event',srl[role]))
             question=[]
             answer=srl[role]
-            generate_question(srl,questions,role,Qtype,question,answer) 
+            
+            answer_words=answer.split()
+            if len(answer_words)==1 and pos_d[answer_words[0]]=='PRP':
+                continue
+            else:
+                generate_question(srl,questions,role,Qtype,question,answer) 
 
 def printQ(questions,line,i):
     for Qtype in questions:
