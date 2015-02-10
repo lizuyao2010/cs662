@@ -3,7 +3,23 @@ from practnlptools.tools import Annotator
 from collections import defaultdict
 from nltk.stem import WordNetLemmatizer
 from alchemyapi import AlchemyAPI
-import sys
+import sys,os
+
+
+def build_d(cat_d):
+    dir_path='lists'
+    all_files=os.listdir(dir_path)
+    for filename in all_files:
+        filepath=dir_path+'/'+filename
+        if os.path.isfile(filepath):
+            cat=filename.strip().split('.')[0]
+            with open(filepath,'r') as fp:
+                for line in fp:
+                    word=line.strip()
+                    cat_d[word]=cat  
+
+cat_d={}
+build_d(cat_d)
 annotator=Annotator()
 wordnet_lemmatizer = WordNetLemmatizer()
 alchemyapi = AlchemyAPI()
@@ -47,6 +63,7 @@ role2Qtype['C-A1']=['how']
 pos_d={}
 
 log=open('run.log','w')
+  
 
 def breakverb(item,srl,question):
     if pos_d[srl[item]]!='VBG' and pos_d[srl[item]]!='VBN' and 'AM-MOD' not in srl:
@@ -107,9 +124,13 @@ def generate_which(srl,inputsentence,questions):
         question=[]
         answer=key
         questionword=''
+
         for role in srl:
             if key in srl[role]:
-                generate_question(srl,questions,role,'what '+typeoftext[key],question,answer)
+                generate_question(srl,questions,role,'what '+typeoftext[answer],question,answer)                
+                if answer in cat_d:
+                    question=[]
+                    generate_question(srl,questions,role,'what '+cat_d[answer],question,answer)
 
 def generate(srl,questions):
     srl2sent=get_sent(srl)
