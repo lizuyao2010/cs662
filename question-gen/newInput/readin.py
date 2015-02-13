@@ -6,6 +6,7 @@ sent={}
 line_number=0
 corpus={}
 for line in f:
+    print line
     line=line.strip()
     if line:
         line_number+=1

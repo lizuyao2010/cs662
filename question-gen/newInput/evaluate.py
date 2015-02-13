@@ -57,6 +57,7 @@ sent={}
 last_sent=''
 line_number=0
 i=1
+missing=0
 for line in f:
     line=line.strip()
     if line:
@@ -79,10 +80,14 @@ for line in f:
                         compare(my_answer,sent)
                 else:
                     print 'corpus has no key:', i
+                    missing+=1
                 i+=1
             last_sent=sent['InputSentence']
             line_number=0
+print '--------'
 print 'total:',i
+print '--------'
+print 'recall:',1-float(missing)/i
 print '--------'
 for key in stat_question_acc_BLEU:
     if stat_question_acc_BLEU[key][0]>0:
