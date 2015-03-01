@@ -7,6 +7,9 @@ stat_question_acc_BLEU={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'who
 stat_answer_acc={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
 stat_answer_acc_BLEU={'what':[0,0],'when':[0,0],'where':[0,0],'who':[0,0],'whom':[0,0],'which':[0,0],'how':[0,0],'why':[0,0],'how long':[0,0]}
 weights = [0.25, 0.25, 0.25, 0.25]
+stat_question_acc_overall=[0,0]
+stat_answer_acc_overall=[0,0]
+
 
 def compare_each_answer(my_Q,Q,Qtype):
     acc=BLEU.modified_precision(my_Q,[Q],n=1)
@@ -18,8 +21,10 @@ def compare_each_answer(my_Q,Q,Qtype):
     number_correct = len(my_Q) * acc
     number_correct_BLEU=BLEU_score
     stat_answer_acc[Qtype][0]+=len(my_Q)
+    stat_answer_acc_overall[0]+=len(my_Q)
     stat_answer_acc_BLEU[Qtype][0]+=1
     stat_answer_acc[Qtype][1]+=number_correct
+    stat_answer_acc_overall[1]+=number_correct
     stat_answer_acc_BLEU[Qtype][1]+=number_correct_BLEU   
 
 def compare_each_question(my_Q,Q,Qtype):   
@@ -32,8 +37,10 @@ def compare_each_question(my_Q,Q,Qtype):
     number_correct = len(my_Q) * acc
     number_correct_BLEU=BLEU_score
     stat_question_acc[Qtype][0]+=len(my_Q)
+    stat_question_acc_overall[0]+=len(my_Q)
     stat_question_acc_BLEU[Qtype][0]+=1
     stat_question_acc[Qtype][1]+=number_correct
+    stat_question_acc_overall[1]+=number_correct
     stat_question_acc_BLEU[Qtype][1]+=number_correct_BLEU  
 
 def compare(my_answer,sent):
@@ -88,6 +95,9 @@ print '--------'
 print 'total:',i
 print '--------'
 print 'recall:',1-float(missing)/i
+print '--------'
+print 'question precision:',float(stat_question_acc_overall[1])/stat_question_acc_overall[0]
+print 'answer precision:',float(stat_answer_acc_overall[1])/stat_answer_acc_overall[0]
 print '--------'
 for key in stat_question_acc_BLEU:
     if stat_question_acc_BLEU[key][0]>0:
