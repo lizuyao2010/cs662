@@ -47,14 +47,16 @@ template['AM-LOC']=['AM-MOD','A0','V','A1','A2','AM-MNR','AM-TMP']
 
 
 role2Qtype={}
-role2Qtype['A0']=['what is the name','what']
+#role2Qtype['A0']=['what is the name','what']
+role2Qtype['A0']=['who','what']
 role2Qtype['A1']=['what']
 role2Qtype['A2']=['whom']
 role2Qtype['A3']=['how long']
 role2Qtype['A4']=['where']
 role2Qtype['AM-MNR']=['how']
 role2Qtype['AM-LOC']=['where']
-role2Qtype['AM-TMP']=['what month and year']
+#role2Qtype['AM-TMP']=['what month and year']
+role2Qtype['AM-TMP']=['when']
 role2Qtype['AM-PNC']=['why']
 role2Qtype['AM-DIR']=['where to/from']
 role2Qtype['AM-PRP']=['why']
@@ -97,6 +99,7 @@ def generate_question(srl,questions,role,Qtype,question,answer):
                 else:
                     question.append(srl[item])
     question.insert(0,Qtype)
+    question = [w.replace('i', 'you') for w in question]
     questions[Qtype].append((' '.join(question),answer))
     
 
