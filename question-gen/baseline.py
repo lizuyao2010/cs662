@@ -187,6 +187,7 @@ def generate_what(sent):
             break
         else:
             what_question.append(row[1])
+    #question = [w.replace('i', 'you') for w in what_question]		    	
     what=[{'Q':what_question,'A':what_answer}]
     return what   
 
@@ -365,14 +366,37 @@ def evaluate3():
                     compare(my_answer,sent)
             line_number=0
 def printresult(questions,line):
+    question=[]	
     for Qtype in questions:
         for question_answer in questions[Qtype]:
             if question_answer['Q'] and question_answer['A']:
-                print line[0]
-                print ' '.join(question_answer['Q']).lower().rstrip('.')
-                print ' '.join(question_answer['A']).lower()
-                print Qtype
-                print
+                
+		
+		#if len(question_answer['A'])==1 and pos_d[answer_words[0]]=='PRP':
+                #	continue
+		#print (question_answer['A'][0].lower() == 'i')
+		if str(question_answer['A'][0]).lower() == 'i' or str(question_answer['A'][0]).lower()  == 'we':
+			#print "detect I"
+			continue
+
+		else:
+			print line[0]
+			question=[]
+                	for w in question_answer['Q']:
+				if w.lower() == 'i' or w.lower() == 'we':
+					#print "same"	
+					#print w 
+					question.append("you")
+				else:
+					question.append(w)
+				#print question
+
+			#question = [w.replace('i', 'you') for w in question_answer['Q']]
+			#print ' '.join(question_answer['Q']).lower().rstrip('.')
+                	print ' '.join(question).lower().rstrip('.') + " " + "?"
+			print ' '.join(question_answer['A']).lower().rstrip('.')
+                	print Qtype
+                	print
 
 def demo():
     for line in sys.stdin:

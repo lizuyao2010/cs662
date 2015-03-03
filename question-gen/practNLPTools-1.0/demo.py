@@ -99,9 +99,17 @@ def generate_question(srl,questions,role,Qtype,question,answer):
                 else:
                     question.append(srl[item])
     question.insert(0,Qtype)
-    question = [w.replace('i', 'you') for w in question]
-    questions[Qtype].append((' '.join(question),answer))
-    
+    #question = [w.replace('i', 'you') for w in question]
+    qClean=[]
+    for w in question:
+	if  w.lower() == 'i' or w.lower() == 'we':
+		qClean.append("you")
+		
+	else:
+		qClean.append(w)
+
+    #questions[Qtype].append((' '.join(question),answer))
+    questions[Qtype].append((' '.join(qClean),answer))
 
 def get_sent(srl):
     s=[]
@@ -160,7 +168,7 @@ def printQ(questions,line,i):
     for Qtype in questions:
         for question_answer in questions[Qtype]:
             print line[0]
-            print question_answer[0].lower()
+            print question_answer[0].lower() + " " +"?"
             print question_answer[1].lower()
             print Qtype
             print
