@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import json
+import json,string
 import urllib2
 import sys
 #from nltk.align.bleu import BLEU
@@ -53,6 +53,14 @@ def generate_when(inputsentence,sent):
                 if tag=="AM-TMP":
                     flag=False
                     when_question.insert(0,"when")
+                    index=len(when_question)
+                    '''
+                    if "in" in when_question:
+                        index=when_question.index("in")
+                    if index!=len(when_question):
+                        when_question=when_question[:index]+["in","this","location"]
+                    '''
+                    
                     j=endposition(i+1,sent)
                     when_answer=[word[1] for word in sent[i:j]]
                     when.append({'Q':when_question,'A':when_answer})
