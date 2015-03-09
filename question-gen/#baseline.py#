@@ -380,6 +380,7 @@ def printresult(questions,line):
 			continue
 
 		else:
+			print line[0]
 			question=[]
                 	for w in question_answer['Q']:
 				if w.lower() == 'i' or w.lower() == 'we':
@@ -389,9 +390,8 @@ def printresult(questions,line):
 				else:
 					question.append(w)
 				#print question
-               		if len(question) <=3:
-                    		continue
-			print line[0]
+            if len(question) <=3:
+                continue
 			#question = [w.replace('i', 'you') for w in question_answer['Q']]
 			#print ' '.join(question_answer['Q']).lower().rstrip('.')
                 	print ' '.join(question).lower().rstrip('.') + " " + "?"
